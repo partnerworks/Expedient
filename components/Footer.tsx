@@ -1,7 +1,10 @@
 
 import React from 'react';
+import { useLanguage } from './LanguageContext';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-white border-t border-[#999999]/30 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,13 +14,13 @@ const Footer: React.FC = () => {
               EXPEDIENT Ltd<span className="text-[#FBB531]">.</span>
             </span>
             <p className="mt-4 text-sm text-slate-500 max-w-xs leading-relaxed">
-              Board-level cyber governance and fractional CISO services for ADGM regulated entities.
+              {t('footer.tag_line')}
             </p>
           </div>
           
-          <div className="flex space-x-16">
+          <div className="flex space-x-16 rtl:space-x-reverse">
             <div>
-              <h6 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-6">Focus</h6>
+              <h6 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-6">{t('footer.focus')}</h6>
               <ul className="text-sm text-slate-500 space-y-3 font-medium">
                 <li>ADGM Compliance</li>
                 <li>FSRA Reporting</li>
@@ -25,21 +28,21 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h6 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-6">Firm</h6>
+              <h6 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-6">{t('footer.firm')}</h6>
               <ul className="text-sm text-slate-500 space-y-3 font-medium">
-                <li>Services</li>
-                <li>Approach</li>
-                <li>Contact</li>
+                <li>{t('nav.services')}</li>
+                <li>{t('nav.approach')}</li>
+                <li>{t('nav.contact')}</li>
               </ul>
             </div>
           </div>
         </div>
         
         <div className="mt-16 pt-8 border-t border-[#999999]/20 flex flex-col md:flex-row justify-between items-end text-xs text-slate-500 space-y-4 md:space-y-0 font-medium">
-          <p>© 2026 Expedient Ltd. All rights reserved.</p>
-          <div className="text-right flex flex-col items-end">
-            <p>Based in Abu Dhabi, UAE.</p>
-            <p className="mt-1">ADGM Registration Approved & Pending</p>
+          <p>{t('footer.copyright')}</p>
+          <div className="text-end flex flex-col items-end">
+            <p>{t('footer.based')}</p>
+            <p className="mt-1">{t('footer.status')}</p>
           </div>
         </div>
       </div>

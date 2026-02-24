@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useLanguage } from './LanguageContext';
 
 const CISSPLogo = () => (
   <svg viewBox="0 0 400 400" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,12 +37,14 @@ const PECBBadge = ({ title, sub }: { title: string, sub: string }) => (
 );
 
 const CredentialsStrip: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="bg-white py-16 border-t border-[#999999]/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-12">
-            Professional Accreditations
+            {t('credentials.title')}
           </p>
           
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24">

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useLanguage } from './LanguageContext';
 
 interface NavbarProps {
   activeSection: string;
@@ -7,12 +8,13 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t, language, setLanguage } = useLanguage();
 
   const navLinks = [
-    { name: 'Services', id: 'services' },
-    { name: 'Compliance', id: 'compliance' },
-    { name: 'Approach', id: 'approach' },
-    { name: 'Contact', id: 'contact' },
+    { name: t('nav.services'), id: 'services' },
+    { name: t('nav.compliance'), id: 'compliance' },
+    { name: t('nav.approach'), id: 'approach' },
+    { name: t('nav.contact'), id: 'contact' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -32,8 +34,15 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     setIsOpen(false);
   };
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'ar' : 'en');
+  };
+
   return (
-    <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-[#999999]/20 py-4 shadow-sm">
+    <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-[#999999]/20 py-4 shadow-sm" dir="ltr">
+      {/* We keep nav dir="ltr" internally for the layout structure if we want logo left and links right always, 
+          OR we let it flip naturally. Letting it flip naturally is better for RTL users. 
+          The parent LanguageContext sets 'dir' on html, so this will flip automatically. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-10">
           <div className="flex items-center cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
@@ -43,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
           </div>
           
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-10 rtl:ml-0 rtl:mr-10 flex items-baseline space-x-8 rtl:space-x-reverse">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
@@ -55,18 +64,30 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                   {link.name}
                 </button>
               ))}
+              <button
+                onClick={toggleLanguage}
+                className="text-sm font-semibold text-slate-600 hover:text-[#60B9D9] transition-colors px-2"
+              >
+                {t('nav.lang')}
+              </button>
               <a 
                 href="https://calendly.com/chrishyatt/45min"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#60B9D9] text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-[#4da3c4] transition-all shadow-md transform hover:-translate-y-0.5"
               >
-                Book a call
+                {t('nav.book')}
               </a>
             </div>
           </div>
 
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-4 rtl:space-x-reverse">
+            <button
+                onClick={toggleLanguage}
+                className="text-sm font-semibold text-slate-600 hover:text-[#60B9D9]"
+            >
+              {language === 'en' ? 'AR' : 'EN'}
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -90,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                className="block w-full text-start px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               >
                 {link.name}
               </button>
@@ -99,9 +120,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
               href="https://calendly.com/chrishyatt/45min"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-left px-3 py-2 rounded-md text-base font-bold text-[#60B9D9] hover:bg-slate-50"
+              className="block w-full text-start px-3 py-2 rounded-md text-base font-bold text-[#60B9D9] hover:bg-slate-50"
             >
-              Book a call
+              {t('nav.book')}
             </a>
           </div>
         </div>

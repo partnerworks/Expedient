@@ -9,8 +9,9 @@ import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import CredentialsStrip from './components/CredentialsStrip';
 import Footer from './components/Footer';
+import { LanguageProvider } from './components/LanguageContext';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
@@ -57,6 +58,14 @@ const App: React.FC = () => {
       </main>
       <Footer />
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 };
 
